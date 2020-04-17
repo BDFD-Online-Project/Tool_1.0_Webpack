@@ -1,5 +1,5 @@
 const { resolve } = require('path');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   //入口文件
   entry: './src/index.js',
@@ -47,6 +47,11 @@ module.exports = {
   //plugins 的配置
   plugins: [
     //详细的plugin的配置
+    //html-webpack-plugin
+    //功能:默认创建一个新的HTML，自动引入打包输出的所有资源(JS/CSS),否则会变成多次引入s
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
   ],
   // 模式
   mode: 'development', //开发模式
