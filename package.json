@@ -4,12 +4,23 @@
   "description": "Reference Link: https://www.youtube.com/watch?v=_qXcO0Zkvy0&list=PLmOn9nNkQxJFt0QFY1MbGrSPMrApv-Uli&index=2&t=34s",
   "main": "index.js",
   "dependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "jquery": "^3.5.0",
+    "less": "^3.11.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/polyfill": "^7.8.7",
+    "@babel/preset-env": "^7.9.5",
+    "babel-loader": "^8.1.0",
+    "core-js": "^3.6.5",
     "css-loader": "^3.5.2",
+    "eslint-loader": "^4.0.0",
     "file-loader": "^6.0.0",
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.2.0",
-    "jquery": "^3.5.0",
-    "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "mini-css-extract-plugin": "^0.9.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
@@ -21,7 +32,6 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },
-  "devDependencies": {},
   "browserslist": {
     "development": [
       "last 1 chrome version",

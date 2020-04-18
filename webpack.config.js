@@ -2,8 +2,8 @@ const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
-//添加nodejs环境变量参数
-process.env.NODE_ENV = 'development';
+
+process.env.NODE_ENV = 'production';
 
 module.exports = {
   entry: './src/js/index.js',
@@ -13,15 +13,29 @@ module.exports = {
   },
   module: {
     rules: [
+      /*
+        js兼容性处理：babel-loader @babel-core @babel/preset-env
+        1.基本js兼容性处理 => @babel/preset-env
+        问题：只能转换基本语法，如promise不能转换
+        2.全部js兼容性处理 => @bable/polyfill
+        问题：我只要解决部分兼容性问题，但是将所有兼容性代码全部引入，体积太大了
+        3.需要做兼容性处理就做：按需下载 => core-js
+      */
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            preset: '@babel/preset-env',
+          },
+        },
+      },
       {
         test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
-          /*
-          css兼容性处理 postcss -> postcss-loader postcss-preset-env
-          另外需要在package.json中BroweserList里面的配置，通过配置加载指定的css兼容性样式
-          */
           {
             loader: 'postcss-loader',
             options: {
@@ -65,8 +79,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'css/build.css',
     }),
-    //压缩css
     new OptimizeCssAssetsWebpackPlugin({}),
   ],
-  mode: 'development', //开发模式
+  mode: 'development',
 };
