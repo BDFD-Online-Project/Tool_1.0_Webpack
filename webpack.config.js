@@ -27,7 +27,26 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            preset: '@babel/preset-env',
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  //按需下载
+                  useBuiltIns: 'usage',
+                  corejs: {
+                    version: 3,
+                  },
+                  //兼容版本问题
+                  targets: {
+                    chrome: '60',
+                    firefox: '50',
+                    ie: '8',
+                    safari: '10',
+                    edge: '17',
+                  },
+                },
+              ],
+            ],
           },
         },
       },
