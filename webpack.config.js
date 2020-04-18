@@ -79,6 +79,8 @@ module.exports = {
         options: {
           limit: 3 * 1024,
           esModule: false,
+          name: '[hash:10].[ext]',
+          outputPath: 'images',
         },
       },
       {

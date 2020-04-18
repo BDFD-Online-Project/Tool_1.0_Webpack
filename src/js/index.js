@@ -1,6 +1,6 @@
 import '../css/a.css';
 import '../css/b.css';
-import '../css/index.less';
+import './index.less';
 
 // import '@babel/polyfill';
 
