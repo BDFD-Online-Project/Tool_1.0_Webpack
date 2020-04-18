@@ -24,6 +24,7 @@ module.exports = {
           limit: 3 * 1024,
           esModule: false,
           name: '[hash:10].[ext]',
+          outputPath: 'images',
         },
       },
       {
@@ -35,6 +36,7 @@ module.exports = {
         loader: 'file-loader',
         options: {
           name: '[hash:10].[ext]',
+          outputPath: 'media',
         },
       },
     ],

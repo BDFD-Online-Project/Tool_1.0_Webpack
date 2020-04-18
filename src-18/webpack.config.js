@@ -77,10 +77,8 @@ module.exports = {
         test: /\.(jpg|png|gif)$/,
         loader: 'url-loader',
         options: {
-          limit: 1 * 1024,
+          limit: 3 * 1024,
           esModule: false,
-          name: '[hash:10].[ext]',
-          outputPath: 'images',
         },
       },
       {
@@ -91,8 +89,7 @@ module.exports = {
         exclude: /\.(css|js|html|less|jpg|png|gif)$/,
         loader: 'file-loader',
         options: {
-          name: '[hash:10].[ext]',
-          outputPath: 'medias',
+          // name: '[hash:10].[ext]',
         },
       },
     ],
@@ -100,6 +97,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
+      minify: false,
     }),
     new MiniCssExtractPlugin({
       filename: 'css/build.css',
