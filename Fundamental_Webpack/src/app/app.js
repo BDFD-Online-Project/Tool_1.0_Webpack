@@ -2,16 +2,17 @@ const alertService = new AlertService();
 const componentService = new ComponentService();
 const run = (alertService, componentService) => {
   alertService.hideErrors();
+
   componentService.onClick(() => {
     alertService.hideErrors();
-    const inputs = componentService.getInput();
+    const inputs = componentService.getInputs();
     const parsedInputs = parseInputs(...inputs);
-    if (inputsAreValid(...parseInputs)) {
+    if (inputsAreValid(...parsedInputs)) {
       const [numA, numB] = parsedInputs;
-      componentService.setResult(numA, numB);
+      componentService.setResult(numA + numB);
     } else {
       componentService.setResult("");
-      alertService.hidenAdditionError(inputs, parsedInputs);
+      alertService.handleAdditionError(inputs, parsedInputs);
     }
   });
 };

@@ -4,6 +4,9 @@
   "rules": {
     "global-require": "off",
     "no-console": "off",
-    "spaced-comment": "off"
+    "spaced-comment": "off",
+    "no-undef": "off",
+    "no-unused-vars": "off",
+    "no-shadow": "off"
   }
 }

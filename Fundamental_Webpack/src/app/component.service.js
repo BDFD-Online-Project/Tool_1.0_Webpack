@@ -6,11 +6,11 @@ class ComponentService {
     this.resultDiv = document.getElementById("result");
   }
 
-  getInput() {
+  getInputs() {
     return [this.numberOneInput.value, this.numberTwoInput.value];
   }
 
-  getResult(str) {
+  setResult(str) {
     this.resultDiv.innerText = str;
   }
 
