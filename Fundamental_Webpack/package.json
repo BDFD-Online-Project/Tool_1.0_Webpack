@@ -1,15 +1,17 @@
 {
-  "name": "webpack_test_file",
+  "name": "code",
   "version": "1.0.0",
+  "private": true,
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "webpack"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
-    "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11"
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
   }
 }

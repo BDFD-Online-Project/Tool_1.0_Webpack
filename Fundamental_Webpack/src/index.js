@@ -1,1 +1,1 @@
-alert('Hello World');
+alert("HELLO FROM WEBPACK!");
