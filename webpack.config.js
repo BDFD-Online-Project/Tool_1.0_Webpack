@@ -109,5 +109,11 @@ module.exports = {
     }),
     new OptimizeCssAssetsWebpackPlugin({}),
   ],
-  mode: "production",
+  // mode: "production",
+  devServer: {
+    contentBase: resolve(__dirname, "build"),
+    compress: true,
+    port: 3000,
+    open: true,
+  },
 };
