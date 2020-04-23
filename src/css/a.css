@@ -1,6 +1,6 @@
 #square1 {
-  width: 100px;
-  height: 100px;
+  width: 300px;
+  height: 300px;
   background-color: purple;
   display: flex;
   backface-visibility: hidden;

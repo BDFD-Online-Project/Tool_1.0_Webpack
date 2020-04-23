@@ -23,3 +23,6 @@ const promise = new Promise((resolve) => {
 });
 
 console.log(promise);
+
+console.log("index.js文件被加载了");
+console.log("Hello World123");
