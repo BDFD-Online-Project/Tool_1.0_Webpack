@@ -16,10 +16,37 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
-        loader: "babel-loader",
-        options: {
-          presets: ["@babel/preset-env"],
-        },
+        use: [
+          {
+            loader: "babel-loader",
+            options: {
+              presets: [
+                [
+                  "@babel/preset-env",
+                  {
+                    useBuiltIns: "usage",
+                    corejs: {
+                      version: 3,
+                    },
+                    targets: {
+                      chrome: "60",
+                      firefox: "50",
+                      ie: "8",
+                      safari: "10",
+                      edge: "17",
+                    },
+                  },
+                ],
+              ],
+            },
+          },
+          {
+            loader: "eslint-loader",
+            options: {
+              fix: true,
+            },
+          },
+        ],
       },
       {
         test: /\.css$/,
@@ -50,7 +77,6 @@ module.exports = {
             },
           },
           "css-loader",
-          // "postcss-loader",
           {
             loader: "postcss-loader",
             options: {
@@ -95,5 +121,5 @@ module.exports = {
     }),
     new OptimizeCssAssetsWebpackPlugin({}),
   ],
-  mode: "development", //开发模式
+  mode: "development",
 };

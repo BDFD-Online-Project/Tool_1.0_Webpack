@@ -14,3 +14,12 @@ const add2 = (x, y) => {
 
 console.log(add1(2, 3));
 console.log(add2(3, 4));
+
+const promise = new Promise((resolve) => {
+  setTimeout(() => {
+    console.log("success");
+    resolve();
+  }, 1000);
+});
+
+console.log(promise);

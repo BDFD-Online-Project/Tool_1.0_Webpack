@@ -1,16 +1,25 @@
-import '../css/a.css';
-import '../css/b.css';
-// import '@babel/polyfill';
+import "../css/iconfont.css";
+import "../css/index.css";
+import "../css/index.less";
+import "../css/a.css";
+import "../css/b.css";
 
-const add = (x, y) => {
+function add1(x, y) {
+  return x + y;
+}
+
+const add2 = (x, y) => {
   return x + y;
 };
-console.log(add(2, 3));
+
+console.log(add1(2, 3));
+console.log(add2(3, 4));
 
 const promise = new Promise((resolve) => {
   setTimeout(() => {
-    console.log('定时器执行完了!');
+    console.log("success");
     resolve();
   }, 1000);
 });
+
 console.log(promise);
