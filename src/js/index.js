@@ -4,8 +4,13 @@ import "../css/index.less";
 import "../css/a.css";
 import "../css/b.css";
 
-function add(x, y) {
+function add1(x, y) {
   return x + y;
 }
 
-console.log(add(2, 3));
+const add2 = (x, y) => {
+  return x + y;
+};
+
+console.log(add1(2, 3));
+console.log(add2(3, 4));
