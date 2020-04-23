@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: "./src/js/index.js",
   output: {
-    filename: "build.js",
+    filename: "js/build.js",
     path: resolve(__dirname, "build"),
   },
   module: {
@@ -48,10 +48,4 @@ module.exports = {
     }),
   ],
   mode: "development", //开发模式
-  devServer: {
-    contentBase: resolve(__dirname, "build"),
-    compress: true,
-    port: 3000,
-    open: true,
-  },
 };
