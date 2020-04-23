@@ -21,8 +21,9 @@ const promise = new Promise((resolve) => {
     resolve();
   }, 1000);
 });
-
 console.log(promise);
 
-console.log("index.js文件被加载了");
-console.log("Hello World123");
+function sum(...args) {
+  return args.reduce((p, c) => p + c, 0);
+}
+console.log(sum(1, 2, 3, 4, 5));

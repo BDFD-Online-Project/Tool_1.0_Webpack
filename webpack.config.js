@@ -3,9 +3,20 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin");
 
+/*
+  缓存：
+  babel 缓存
+    cacheDirectory: true
+  文件缓存
+    hash: 每次构建会生成唯一hash值
+    问题： 因为js和css同时使用一个hash值，如果重新打包会导致缓存失效
+    chunkhash: 根据chunk生成hash，如果来源于同一个chunk，hash不变
+    问题：js和css hash值还是一样，因为css在js中构建的，所以同属于一个chunk
+    contenthash: 根据文件内容生成hash值，不同文件hash值一定不一样
+*/
+
 process.env.NODE_ENV = "development";
 
-//复用loader
 const commonCSSloader = [
   {
     loader: MiniCssExtractPlugin.loader,
@@ -26,76 +37,82 @@ const commonCSSloader = [
 
 module.exports = {
   entry: "./src/js/index.js",
-  output: {
-    filename: "js/build.js",
-    path: resolve(__dirname, "build"),
-  },
+
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: [
+        //一下loaader 只能匹配一个
+        //不能有两个配置处理同一类型文件
+        oneOf: [
           {
-            loader: "babel-loader",
+            test: /\.js$/,
+            exclude: /(node_modules|bower_components)/,
+            use: [
+              {
+                loader: "babel-loader",
+                options: {
+                  presets: [
+                    [
+                      "@babel/preset-env",
+                      {
+                        useBuiltIns: "usage",
+                        corejs: {
+                          version: 3,
+                        },
+                        targets: {
+                          chrome: "60",
+                          firefox: "50",
+                          ie: "8",
+                          safari: "10",
+                          edge: "17",
+                        },
+                      },
+                    ],
+                  ],
+                  //开启babel缓存
+                  //第二次构建时，会读取之前的缓存
+                  cacheDirectory: true,
+                },
+              },
+              {
+                loader: "eslint-loader",
+                options: {
+                  fix: true,
+                },
+              },
+            ],
+          },
+          {
+            test: /\.css$/,
+            use: [...commonCSSloader],
+          },
+          {
+            test: /\.less$/,
+            use: [...commonCSSloader, "less-loader"],
+          },
+          {
+            test: /\.(jpg|png|gif)$/,
+            loader: "url-loader",
             options: {
-              presets: [
-                [
-                  "@babel/preset-env",
-                  {
-                    useBuiltIns: "usage",
-                    corejs: {
-                      version: 3,
-                    },
-                    targets: {
-                      chrome: "60",
-                      firefox: "50",
-                      ie: "8",
-                      safari: "10",
-                      edge: "17",
-                    },
-                  },
-                ],
-              ],
+              limit: 3 * 1024,
+              esModule: false,
+              name: "[hash:10].[ext]",
+              outputPath: "images",
             },
           },
           {
-            loader: "eslint-loader",
+            test: /\.html$/,
+            loader: "html-loader",
+          },
+          {
+            exclude: /\.(css|js|html|less|jpg|png|gif)$/,
+            loader: "file-loader",
             options: {
-              fix: true,
+              name: "[hash:10].[ext]",
+              outputPath: "media",
             },
           },
         ],
-      },
-      {
-        test: /\.css$/,
-        use: [...commonCSSloader],
-      },
-      {
-        test: /\.less$/,
-        use: [...commonCSSloader, "less-loader"],
-      },
-      {
-        test: /\.(jpg|png|gif)$/,
-        loader: "url-loader",
-        options: {
-          limit: 3 * 1024,
-          esModule: false,
-          name: "[hash:10].[ext]",
-          outputPath: "images",
-        },
-      },
-      {
-        test: /\.html$/,
-        loader: "html-loader",
-      },
-      {
-        exclude: /\.(css|js|html|less|jpg|png|gif)$/,
-        loader: "file-loader",
-        options: {
-          name: "[hash:10].[ext]",
-          outputPath: "media",
-        },
       },
     ],
   },
@@ -105,41 +122,21 @@ module.exports = {
       template: "./src/index.html",
     }),
     new MiniCssExtractPlugin({
-      filename: "./css/build.css",
+      filename: "./css/build.[contenthash:10].css",
     }),
     new OptimizeCssAssetsWebpackPlugin({}),
   ],
   // mode: "production",
+  output: {
+    filename: "js/build.[contenthash:10].js",
+    path: resolve(__dirname, "build"),
+  },
+
   devServer: {
     contentBase: resolve(__dirname, "build"),
     compress: true,
     port: 3000,
     open: true,
   },
-  /*
-  [inline-|hidden-|eval-][nosources-][cheap-[module-]]source-map
-  source-map:
-  显示错误代码准确信息和源代码的错误位置
-  inline-source-map:只生成一个内联，出现在build.js中
-  显示错误代码准确信息和源代码的错误位置
-  eval-source-map:每个文件有一个单独内联，都在eval中
-  显示错误代码准确信息和源代码的错误位置
-  hidden-source-map:外部
-  显示错误代码准确信息但不显示源代码位置
-  nosource-source-map:外部
-  显示错误代码准确信息但没有任何源代码信息
-  cheap-source-map:外部
-  显示错误代码准确信息和源代码的错误位置
-  但是只精确到列
-  cheap-module-source-map:外部
-  显示错误代码准确信息和源代码的错误位置
-  但是只精确到列，同时增加loader的source map加入其中
-  */
-  //开发环境：
-  //速度快： eval>inline>cheap
-  //调试友好： source-map<cheap-module<cheap
-  //生产环境：
-  //稳定：nosource-source-map 全部隐藏 /hidden-source-map 只隐藏原代码
-
   devtool: "eval-source-map",
 };
