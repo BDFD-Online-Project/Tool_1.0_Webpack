@@ -5,6 +5,24 @@ const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plug
 
 process.env.NODE_ENV = "development";
 
+//复用loader
+const commonCSSloader = [
+  {
+    loader: MiniCssExtractPlugin.loader,
+    options: {
+      publicPath: "../",
+    },
+  },
+  "css-loader",
+  {
+    loader: "postcss-loader",
+    options: {
+      ident: "postcss",
+      plugins: () => [require("postcss-preset-env")()],
+    },
+  },
+];
+
 module.exports = {
   entry: "./src/js/index.js",
   output: {
@@ -121,5 +139,5 @@ module.exports = {
     }),
     new OptimizeCssAssetsWebpackPlugin({}),
   ],
-  mode: "development",
+  mode: "production",
 };
