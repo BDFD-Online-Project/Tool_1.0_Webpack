@@ -126,7 +126,7 @@ module.exports = {
     }),
     new OptimizeCssAssetsWebpackPlugin({}),
   ],
-  // mode: "production",
+  // mode: "development",
   output: {
     filename: "js/build.[contenthash:10].js",
     path: resolve(__dirname, "build"),
