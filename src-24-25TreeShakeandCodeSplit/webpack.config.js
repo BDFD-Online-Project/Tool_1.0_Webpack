@@ -124,7 +124,7 @@ module.exports = {
     },
   },
 
-  mode: "production",
+  mode: "development",
 
   output: {
     //[name]: 取文件名
