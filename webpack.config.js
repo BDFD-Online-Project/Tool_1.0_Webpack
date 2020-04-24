@@ -3,18 +3,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin");
 
-/*
-  缓存：
-  babel 缓存
-    cacheDirectory: true
-  文件缓存
-    hash: 每次构建会生成唯一hash值
-    问题： 因为js和css同时使用一个hash值，如果重新打包会导致缓存失效
-    chunkhash: 根据chunk生成hash，如果来源于同一个chunk，hash不变
-    问题：js和css hash值还是一样，因为css在js中构建的，所以同属于一个chunk
-    contenthash: 根据文件内容生成hash值，不同文件hash值一定不一样
-*/
-
 process.env.NODE_ENV = "development";
 
 const commonCSSloader = [
@@ -41,8 +29,6 @@ module.exports = {
   module: {
     rules: [
       {
-        //一下loaader 只能匹配一个
-        //不能有两个配置处理同一类型文件
         oneOf: [
           {
             test: /\.js$/,
@@ -69,8 +55,6 @@ module.exports = {
                       },
                     ],
                   ],
-                  //开启babel缓存
-                  //第二次构建时，会读取之前的缓存
                   cacheDirectory: true,
                 },
               },
@@ -126,7 +110,7 @@ module.exports = {
     }),
     new OptimizeCssAssetsWebpackPlugin({}),
   ],
-  // mode: "production",
+  mode: "production",
   output: {
     filename: "js/build.[contenthash:10].js",
     path: resolve(__dirname, "build"),
