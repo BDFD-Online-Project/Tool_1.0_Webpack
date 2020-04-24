@@ -109,7 +109,7 @@ module.exports = {
     }),
     new OptimizeCssAssetsWebpackPlugin({}),
   ],
-  // mode: "production",
+  // mode: "development",
   devServer: {
     contentBase: resolve(__dirname, "build"),
     compress: true,
