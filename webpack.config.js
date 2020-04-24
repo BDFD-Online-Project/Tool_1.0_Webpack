@@ -25,11 +25,7 @@ const commonCSSloader = [
 
 module.exports = {
   entry: {
-    //单入口：使用与SPA
     main: "./src/js/index.js",
-    //多入口：有一个入口最终输出就有一个bundle
-    // main: "./src/js/index.js",
-    // test: "./src/js/test.js",
   },
 
   module: {
@@ -116,18 +112,16 @@ module.exports = {
     }),
     new OptimizeCssAssetsWebpackPlugin({}),
   ],
-  //可以自动将node_modules中代码单独打包一个chunk作为最终输出
-  //自动分析多入口chunk中公用文件，如果有会打包单独的chunk.有最小文件限制
+
   optimization: {
     splitChunks: {
       chunks: "all",
     },
   },
 
-  mode: "production",
+  mode: "development",
 
   output: {
-    //[name]: 取文件名
     filename: "js/[name].[contenthash:10].js",
     path: resolve(__dirname, "build"),
   },
