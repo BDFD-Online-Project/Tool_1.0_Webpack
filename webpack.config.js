@@ -5,7 +5,6 @@ const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plug
 
 process.env.NODE_ENV = "development";
 
-//复用loader
 const commonCSSloader = [
   {
     loader: MiniCssExtractPlugin.loader,
@@ -21,9 +20,7 @@ const commonCSSloader = [
       plugins: () => [require("postcss-preset-env")()],
     },
   },
-  "less-loader",
 ];
-
 module.exports = {
   entry: "./src/js/index.js",
   output: {
@@ -109,5 +106,5 @@ module.exports = {
     }),
     new OptimizeCssAssetsWebpackPlugin({}),
   ],
-  mode: "production",
+  mode: "development",
 };
