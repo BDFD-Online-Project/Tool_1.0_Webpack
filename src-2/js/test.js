@@ -1,3 +1,5 @@
+console.log("test.js is running...");
+
 export function mul(x, y) {
   return x * y;
 }
