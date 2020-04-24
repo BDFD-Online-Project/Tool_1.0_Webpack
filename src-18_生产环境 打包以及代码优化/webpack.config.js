@@ -109,5 +109,5 @@ module.exports = {
     }),
     new OptimizeCssAssetsWebpackPlugin({}),
   ],
-  mode: "production",
+  mode: "development",
 };
