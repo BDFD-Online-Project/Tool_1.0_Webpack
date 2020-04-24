@@ -77,6 +77,7 @@ module.exports = {
             },
           },
           "css-loader",
+          "less-loader",
           {
             loader: "postcss-loader",
             options: {
@@ -84,7 +85,6 @@ module.exports = {
               plugins: () => [require("postcss-preset-env")()],
             },
           },
-          "less-loader",
         ],
       },
       {
