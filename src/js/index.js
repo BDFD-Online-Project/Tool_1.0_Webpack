@@ -1,4 +1,4 @@
-import $ from "jquery";
+// import $ from "jquery";
 
 import "../css/iconfont.css";
 import "../css/index.css";
@@ -27,7 +27,7 @@ function sum(...args) {
 }
 console.log(sum(1, 2, 3, 4, 5));
 
-console.log($);
+// console.log($);
 
 import(/*webpackChunkName:'test'*/ "./test")
   .then(({ mul }) => {
