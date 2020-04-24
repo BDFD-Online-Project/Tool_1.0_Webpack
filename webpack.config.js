@@ -5,25 +5,6 @@ const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plug
 
 process.env.NODE_ENV = "development";
 
-//复用loader
-const commonCSSloader = [
-  {
-    loader: MiniCssExtractPlugin.loader,
-    options: {
-      publicPath: "../",
-    },
-  },
-  "css-loader",
-  {
-    loader: "postcss-loader",
-    options: {
-      ident: "postcss",
-      plugins: () => [require("postcss-preset-env")()],
-    },
-  },
-  "less-loader",
-];
-
 module.exports = {
   entry: "./src/js/index.js",
   output: {
@@ -69,11 +50,42 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [...commonCSSloader],
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: "../",
+            },
+          },
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              ident: "postcss",
+              plugins: () => [require("postcss-preset-env")()],
+            },
+          },
+        ],
       },
       {
         test: /\.less$/,
-        use: [...commonCSSloader, "less-loader"],
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: "../",
+            },
+          },
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              ident: "postcss",
+              plugins: () => [require("postcss-preset-env")()],
+            },
+          },
+          "less-loader",
+        ],
       },
       {
         test: /\.(jpg|png|gif)$/,
@@ -109,5 +121,5 @@ module.exports = {
     }),
     new OptimizeCssAssetsWebpackPlugin({}),
   ],
-  mode: "production",
+  mode: "development",
 };
