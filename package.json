@@ -4,6 +4,7 @@
   "description": "Reference Link: https://www.youtube.com/watch?v=_qXcO0Zkvy0&list=PLmOn9nNkQxJFt0QFY1MbGrSPMrApv-Uli&index=2&t=34s",
   "main": "index.js",
   "dependencies": {
+    "babel-eslint": "^10.1.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
     "express": "^4.17.1",

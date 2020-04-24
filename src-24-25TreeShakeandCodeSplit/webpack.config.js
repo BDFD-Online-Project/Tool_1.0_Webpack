@@ -5,14 +5,6 @@ const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plug
 
 process.env.NODE_ENV = "development";
 
-/*
-  tree shaking: 去除无用代码
-  前提 1.必须使用ES6 模块化 2.开始production环境
-      2.减少代码体积
-    在package.json中配置
-    "sideEffects":[*.css,"*.less"] 所有代码都没有副作用 (都可以进行Tree Shaking)
-*/
-
 const commonCSSloader = [
   {
     loader: MiniCssExtractPlugin.loader,
@@ -32,7 +24,13 @@ const commonCSSloader = [
 ];
 
 module.exports = {
-  entry: "./src/js/index.js",
+  entry: {
+    //单入口：使用与SPA
+    main: "./src/js/index.js",
+    //多入口：有一个入口最终输出就有一个bundle
+    // main: "./src/js/index.js",
+    // test: "./src/js/test.js",
+  },
 
   module: {
     rules: [
@@ -114,13 +112,23 @@ module.exports = {
       template: "./src/index.html",
     }),
     new MiniCssExtractPlugin({
-      filename: "./css/build.[contenthash:10].css",
+      filename: "./css/[name].[contenthash:10].css",
     }),
     new OptimizeCssAssetsWebpackPlugin({}),
   ],
+  //可以自动将node_modules中代码单独打包一个chunk作为最终输出
+  //自动分析多入口chunk中公用文件，如果有会打包单独的chunk.有最小文件限制
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+    },
+  },
+
   mode: "production",
+
   output: {
-    filename: "js/build.[contenthash:10].js",
+    //[name]: 取文件名
+    filename: "js/[name].[contenthash:10].js",
     path: resolve(__dirname, "build"),
   },
 
@@ -130,5 +138,6 @@ module.exports = {
     port: 3000,
     open: true,
   },
+
   devtool: "eval-source-map",
 };
