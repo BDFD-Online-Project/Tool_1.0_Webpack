@@ -57,6 +57,9 @@
   "eslintConfig": {
     "extends": "airbnb-base"
   },
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack",

@@ -5,6 +5,14 @@ const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plug
 
 process.env.NODE_ENV = "development";
 
+/*
+  tree shaking: 去除无用代码
+  前提 1.必须使用ES6 模块化 2.开始production环境
+      2.减少代码体积
+    在package.json中配置
+    "sideEffects":[*.css,"*.less"] 所有代码都没有副作用 (都可以进行Tree Shaking)
+*/
+
 const commonCSSloader = [
   {
     loader: MiniCssExtractPlugin.loader,
