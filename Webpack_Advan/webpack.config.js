@@ -37,16 +37,25 @@ module.exports = {
         // enforce:'post',
         //单个loader用loader
         loader: "babel-loader",
+        options: {},
       },
       {
         test: /\.css$/,
         //多个loader用use
         use: ["style-loader", "css-loader"],
       },
+      {
+        //以下配置只会执行一个
+        oneOf: [],
+      },
     ],
   },
 
+  mode: "development",
+
   plugins: [new HtmlWebpackPlugin({})],
+
+  resolve: {},
 
   output: {
     //filename: 文件名字(可以指定名称+目录）
@@ -60,6 +69,4 @@ module.exports = {
     publicPath: "/",
     chunkFilename: "js/[name]_chunk.js", // library: "name", // libraryTarget: "window",
   },
-
-  mode: "development",
 };
