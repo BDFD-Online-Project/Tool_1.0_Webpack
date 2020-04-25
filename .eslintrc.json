@@ -17,6 +17,7 @@
     "spaced-comment": "off",
     "no-undef": "off",
     "no-unused-vars": "off",
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "import/first": "off"
   }
 }
