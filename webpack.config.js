@@ -3,6 +3,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin");
 const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
+const webpack = require("webpack");
+const AddAssetHtmlWebpackPlugin = require("add-asset-html-webpack-plugin");
 
 process.env.NODE_ENV = "development";
 
@@ -122,7 +124,16 @@ module.exports = {
       clientsClaim: true,
       skipWaiting: true,
     }),
+    //告诉webpack那些库不参与打包,同时使用是的名称也得变
+    new webpack.DllReferencePlugin({
+      manifest: resolve(__dirname, "dll/mainfest.json"),
+    }),
+    //将某个文件打包输出出去，并在html中自动引入
+    new AddAssetHtmlWebpackPlugin({
+      filepath: resolve(__dirname, "dll/jquery.js"),
+    }),
   ],
+
   optimization: {
     splitChunks: {
       chunks: "all",
