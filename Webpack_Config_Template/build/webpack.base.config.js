@@ -31,7 +31,7 @@ module.exports = {
         use: [
           {
             loader: "url-loader",
-            include: [path.reslove("src")],
+            include: [path.resolve("src")],
             options: {
               limit: 10000,
             },
