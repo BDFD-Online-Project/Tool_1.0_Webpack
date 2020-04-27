@@ -1,19 +1,17 @@
 const path = require("path");
-const SRC_Path = path.resolve(__dirname, "../src");
+const SRC_PATH = path.resolve(__dirname, "../src");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 module.exports = {
   entry: {
-    main: "./src/js/index.js",
+    main: "./src/index.js",
   },
-
   resolve: {
     extensions: [".vue", ".js"],
     alias: {
-      "@": SRC_Path,
+      "@": SRC_PATH,
     },
   },
-
   module: {
     rules: [
       {
@@ -21,17 +19,17 @@ module.exports = {
         use: "vue-loader",
       },
       {
-        test: /\.js/,
+        test: /\.js$/,
         use: "babel-loader",
+
         exclude: /node_modules/,
-        include: SRC_Path,
+        include: SRC_PATH,
       },
       {
-        test: /\.(woff|ttf|eot|woff2|svg)$/,
+        test: /\.(woff|svg|eot|woff2|tff)$/,
         use: [
           {
             loader: "url-loader",
-            include: [path.resolve("src")],
             options: {
               limit: 10000,
             },
@@ -41,6 +39,5 @@ module.exports = {
       },
     ],
   },
-
   plugins: [new VueLoaderPlugin()],
 };

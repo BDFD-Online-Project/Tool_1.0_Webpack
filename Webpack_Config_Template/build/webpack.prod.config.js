@@ -1,6 +1,6 @@
 const webpack = require("webpack");
 const merge = require("webpack-merge");
-const baseWebpackConfig = require("./webpack.base.config");
+const baseWebpackConf = require("./webpack.base.conf");
 const path = require("path");
 const DIST_PATH = path.resolve(__dirname, "../dist");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
@@ -8,7 +8,7 @@ const BundleAnalyzerPlugin = require("bundle-analyzer-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-module.exports = merge(baseWebpackConfig, {
+module.exports = merge(baseWebpackConf, {
   mode: "production",
 
   devtool: "cheap-module-source-map",
