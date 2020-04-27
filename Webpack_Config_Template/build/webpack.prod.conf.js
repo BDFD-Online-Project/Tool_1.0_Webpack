@@ -1,23 +1,24 @@
-const webpack = require("webpack");
 const merge = require("webpack-merge");
-const baseWebpackConf = require("./webpack.base.conf");
+const baseWebpackConfig = require("./webpack.base.conf.js");
+const webpack = require("webpack");
 const path = require("path");
 const DIST_PATH = path.resolve(__dirname, "../dist");
+//打包之前清除文件
 const CleanWebpackPlugin = require("clean-webpack-plugin");
-const BundleAnalyzerPlugin = require("bundle-analyzer-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+//打包的时候分析包大小等
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
+//分离css
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-module.exports = merge(baseWebpackConf, {
-  mode: "production",
-
-  devtool: "cheap-module-source-map",
-
+module.exports = merge(baseWebpackConfig, {
+  mode: "production", //会将 process.env.NODE_ENV 的值设为 production。启用 FlagDependencyUsagePlugin, FlagIncludedChunksPlugin, ModuleConcatenationPlugin, NoEmitOnErrorsPlugin, OccurrenceOrderPlugin, SideEffectsFlagPlugin 和 UglifyJsPlugin.
+  devtool: "cheap-module-source-map", //不带列映射(column-map)的 SourceMap，将加载的 Source Map 简化为每行单独映射。
   output: {
     filename: "js/[name].[hash].js",
     path: DIST_PATH,
   },
-
   module: {
     rules: [
       {
@@ -29,7 +30,7 @@ module.exports = merge(baseWebpackConf, {
         ],
       },
       {
-        test: /\.(sc|sa)ss&/,
+        test: /\.(sc|sa)ss$/,
         use: [
           MiniCssExtractPlugin.loader,
           { loader: "css-loader" },
@@ -47,13 +48,13 @@ module.exports = merge(baseWebpackConf, {
         ],
       },
       {
-        test: /\.(svg|png|gif|jpg)$/,
+        test: /\.(png|svg|jpg|gif)$/,
         use: [
           {
             loader: "file-loader",
             options: {
               limit: 10000,
-              name: "[hash:10].[ext]",
+              name: "[hash].[ext]",
               outputPath: "images/",
             },
           },
@@ -61,15 +62,12 @@ module.exports = merge(baseWebpackConf, {
       },
     ],
   },
-
   plugins: [
-    new CleanWebpackPlugin(["dist"], {
-      root: path.resolve(__dirname, "../"),
-      verbose: true,
-    }),
+    new CleanWebpackPlugin({}), //每次打包前清除dist
     new HtmlWebpackPlugin({
+      //将目录下的index.html引进生成的dist中的index.html
       template: "src/public/index.html",
-      title: "Webpack_Config_Template",
+      title: "Webpack_Template",
       favicon: "src/assets/favicon-shield.ico",
       minify: {
         removeComments: true,
@@ -78,12 +76,14 @@ module.exports = merge(baseWebpackConf, {
       },
     }),
     new BundleAnalyzerPlugin({
+      //打包分析
       analyzerPort: 10000,
       openAnalyzer: true,
     }),
     new MiniCssExtractPlugin({
+      //分离css
       filename: "css/[name].[chunkhash:8].css",
-      chunkFilename: "css/[id].[hash].css",
+      chunkFilename: "css/[id].[hash]css",
     }),
   ],
 });
