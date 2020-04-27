@@ -20,6 +20,7 @@
     "no-shadow": "off",
     "import/first": "off",
     "import/no-unresolved": "off", //需要配置通用后缀名，一般不建议关闭
-    "import/extensions": "off" //需要配置通用后缀名，一般不建议关闭
+    "import/extensions": "off", //需要配置通用后缀名，一般不建议关闭
+    "no-irregular-whitespace": "off"
   }
 }
